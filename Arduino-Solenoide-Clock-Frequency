@@ -1,0 +1,24 @@
+int solenoide = 12;
+int oldClkPr = CLKPR;
+ 
+void setup ()
+{
+  pinMode(solenoide, OUTPUT);
+}
+ 
+void loop()
+{
+  CLKPR = 0x80;
+  CLKPR = 0x08;
+  delay(8); // 2 seg
+  CLKPR = 0x80;
+  CLKPR = oldClkPr;
+
+  digitalWrite(solenoide,HIGH);
+  delay(25000);
+  digitalWrite(solenoide,LOW);
+  
+  CLKPR = 0x80;
+  CLKPR = 0x08;
+  delay(84275);  // 3,9 1 seg / 234 1 min / 4687 20 min / 14062 1 hora / 84372 6 horas / 337500 24 horas
+}
