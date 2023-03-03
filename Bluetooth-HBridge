@@ -1,0 +1,172 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+
+Servo s;
+SoftwareSerial bluetooth(10, 11); // RX, TX do Arduino
+String command = "";
+char t;
+int tempo_temp = 0;
+int tempo = 0;
+
+int pos;
+int servoPin = 2; 
+int IN1 = 6;
+int IN2 = 7;
+int IN3 = 8;
+int IN4 = 9;
+
+void tras(){
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+}
+
+void frente(){
+ digitalWrite(IN3, LOW);
+ digitalWrite(IN4, HIGH);
+ digitalWrite(IN1, HIGH);
+ digitalWrite(IN2, LOW);
+}
+
+void esquerda(){
+ digitalWrite(IN3, HIGH);
+ digitalWrite(IN4, LOW);
+ digitalWrite(IN1, HIGH);
+ digitalWrite(IN2, LOW);
+}
+
+void direita(){
+ digitalWrite(IN1, LOW);
+ digitalWrite(IN2, HIGH);
+ digitalWrite(IN3, LOW);
+ digitalWrite(IN4, HIGH);
+}
+
+void parar(){
+ digitalWrite(IN1, HIGH);
+ digitalWrite(IN2, HIGH);
+ digitalWrite(IN3, HIGH);
+ digitalWrite(IN4, HIGH);
+}
+void setup()
+{
+  //Define os pinos como saida
+ s.attach(servoPin);
+ pinMode(IN1, OUTPUT);
+ pinMode(IN2, OUTPUT);
+ pinMode(IN3, OUTPUT);
+ pinMode(IN4, OUTPUT);
+ Serial.begin(9600);
+ delay(1000);
+}
+
+
+void loop(){
+
+tempo = millis();
+if(tempo-tempo_temp>=2000){
+  Serial.print("no data");
+  tempo_temp = millis();
+}
+
+
+if(Serial.available()>0){
+t = Serial.read();
+Serial.println(t);
+}
+
+switch (t){
+  case 'q':
+  s.write(25);
+  break;
+  
+  case 'w':
+  s.write(35);
+  break;
+  
+  case 'e':
+  s.write(55);
+  break;
+  
+  case 't':
+  s.write(75);
+  break;
+  
+  case 'y':
+  s.write(90);
+  break;
+  
+  case 'u':
+  s.write(115);
+  break;
+  
+  case 'i':
+  s.write(140);
+  break;
+  
+  case 'o':
+  s.write(155);
+  break;
+  
+  case 'p':
+  s.write(170);
+  break;
+  
+  case 'Q':
+
+  break;
+  
+  case 'W':
+  
+  break;
+  
+  case 'E':
+  
+  break;
+  
+  case 'T':
+  
+  break;
+  
+  case 'Y':
+
+  break;
+  
+  case 'U':
+  
+  break;
+  
+  case 'I':
+  
+  break;
+  
+  case 'O':
+
+  break;
+  
+  case 'P':
+  
+  break;
+  
+  case 'F':
+  frente();
+  break;
+  
+  case 'B':
+  tras();
+  break;
+  
+  case 'L':
+  esquerda();
+  break;
+  
+  case 'R':
+  direita();
+  break;
+  
+  case 'S':
+  parar();
+  break;
+}
+}
